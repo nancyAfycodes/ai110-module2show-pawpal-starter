@@ -1,6 +1,6 @@
 import pytest
 from datetime import date, timedelta
-from pawpal_system import Owner, Dog, Cat, Task, Scheduler
+from pawpal_system import Owner, Dog, Task, Scheduler
 
 
 # ---------------------------------------------------------------------------
@@ -62,7 +62,7 @@ def test_mark_complete_once(sample_task):
     assert sample_task.completed is False
     result = sample_task.mark_complete()
     assert sample_task.completed is True
-    assert result is None                   # no recurrence for "once" tasks
+    assert result is None
 
 
 # ---------------------------------------------------------------------------
@@ -84,7 +84,19 @@ def test_mark_complete_daily(daily_task):
     assert daily_task.completed is True
     assert next_task is not None
     assert next_task.due_date == date.today() + timedelta(days=1)
-    assert next_task.completed is False     # new task starts incomplete
+    assert next_task.completed is False
+
+
+# ---------------------------------------------------------------------------
+# Test 4: Recurring task — weekly
+# Verify that mark_complete() returns a new Task due in 7 days
+# ---------------------------------------------------------------------------
+def test_mark_complete_weekly(weekly_task):
+    next_task = weekly_task.mark_complete()
+    assert weekly_task.completed is True
+    assert next_task is not None
+    assert next_task.due_date == date.today() + timedelta(weeks=1)
+    assert next_task.completed is False
 
 
 # ---------------------------------------------------------------------------
@@ -93,13 +105,12 @@ def test_mark_complete_daily(daily_task):
 # ---------------------------------------------------------------------------
 def test_detect_conflicts(owner, dog):
     owner.availability = {
-        "Monday": {"early_morning": 20}   # only 20 mins available
+        "Monday": {"early_morning": 20}
     }
-    # Two tasks totalling 35 mins in the same slot — should conflict
     dog.tasks = [
         Task(name="Morning walk", category="exercise", duration=20,
              priority="high", time_slot="early_morning", frequency="once"),
-        Task(name="Breakfast",    category="eating",   duration=15,
+        Task(name="Breakfast", category="eating", duration=15,
              priority="high", time_slot="early_morning", frequency="once"),
     ]
     scheduler = Scheduler(owner=owner, pets=[dog])
