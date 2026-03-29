@@ -13,6 +13,7 @@
 
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
+- Based on my initial design concept, I had two classes, user and pet, with each having attributes such as name, task(s), checkoff list. However, using Claude, it suggested that I have more classes, so as to have each attribute have its class. Thereby making it easier to have more defined attributes. 
 
 ---
 
