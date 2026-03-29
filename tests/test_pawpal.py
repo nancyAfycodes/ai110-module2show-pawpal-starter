@@ -1,6 +1,6 @@
 import pytest
 from datetime import date, timedelta
-from pawpal_system import Owner, Dog, Cat, Task
+from pawpal_system import Owner, Dog, Cat, Task, Scheduler
 
 
 # ---------------------------------------------------------------------------
@@ -92,7 +92,6 @@ def test_mark_complete_daily(daily_task):
 # Verify that detect_conflicts() catches slot overflow and returns a warning
 # ---------------------------------------------------------------------------
 def test_detect_conflicts(owner, dog):
-    from pawpal_system import Scheduler
     owner.availability = {
         "Monday": {"early_morning": 20}   # only 20 mins available
     }
