@@ -23,12 +23,13 @@
 
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
 - How did you decide which constraints mattered most?
+- The consideration was given to priority, depending on task, since certain task(s) can have competing priorities. I decided rather than demote one priority, I will flag it, as a way of keeping track that it needs to be completed. In this way, I'll ensure that high priority tasks like walking the dog as top priority whilst giving the dog its daily vitamins can still be completed at a later time. 
 
 **b. Tradeoffs**
 
 - Describe one tradeoff your scheduler makes.
 - Why is that tradeoff reasonable for this scenario?
-
+- As I stated above, I flagged priority tasks rather than lower it. This forces the pet owner to weigh each task(s) and determine which, even though important, can be completed at a later time without having any adverse effect to the overall well-being of the pet. 
 ---
 
 ## 3. AI Collaboration
