@@ -119,3 +119,18 @@ for pet in [buddy, luna]:
     scheduler.flagged_tasks = []  # reset flags per pet
     daily = scheduler.generate_daily_schedule_for_pet(pet, today)
     print_pet_schedule(pet, daily, scheduler.flagged_tasks)
+
+# ---------------------------------------------------------------------------
+# 6. Conflict Detection Demo
+# ---------------------------------------------------------------------------
+print("\n  Conflict Detection")
+print("=" * 50)
+today_name = today.strftime("%A")
+for pet in [buddy, luna]:
+    conflicts = scheduler.detect_conflicts(pet, today_name)
+    if conflicts:
+        for warning in conflicts:
+            print(f"  {warning}")
+    else:
+        print(f"  No conflicts detected for {pet.name}.")
+print("=" * 50)
