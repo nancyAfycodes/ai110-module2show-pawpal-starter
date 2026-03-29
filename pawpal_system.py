@@ -220,6 +220,22 @@ class Scheduler:
 
         return daily
 
+    def generate_daily_schedule_for_pet(self, pet: Pet, schedule_date: date) -> DailySchedule:
+        """Produce a DailySchedule for a specific pet on a given date."""
+        daily = DailySchedule(schedule_date)
+        day_name = schedule_date.strftime("%A")
+        availability = self.owner.availability.get(day_name, {})
+        preferred = self.owner.preferred_slots.get(day_name)
+
+        prioritized = sorted(pet.tasks, key=lambda t: ({"high":0,"medium":1,"low":2}.get(t.priority, 99), t.duration))
+        assignments = self.assign_time_slots(prioritized, availability, preferred)
+
+        for slot, slot_tasks in assignments.items():
+            daily.time_slots[slot].extend(slot_tasks)
+            daily.tasks.extend(slot_tasks)
+
+        return daily
+
     def generate_weekly_schedule(self, week_start: date) -> WeeklySchedule:
         """Produce a WeeklySchedule starting from week_start (typically a Monday)."""
         from datetime import timedelta
