@@ -81,14 +81,16 @@ st.divider()
 st.subheader("Tasks")
 st.caption("Add tasks for your pet. These will feed into the scheduler.")
 
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     task_title = st.text_input("Task title", value="Morning walk")
 with col2:
     duration = st.number_input("Duration (minutes)", min_value=1, max_value=240, value=20)
 with col3:
-    priority = st.selectbox("Priority", ["low", "medium", "high"], index=2)
+    category = st.selectbox("Category", ["eating", "exercise", "grooming", "enrichment", "routine_med", "conditional_med"])
 with col4:
+    priority = st.selectbox("Priority", ["low", "medium", "high"], index=2)
+with col5:
     time_slot = st.selectbox(
         "Time slot",
         ["early_morning", "lunch_break", "afternoon", "evening", "flexible"]
@@ -98,16 +100,18 @@ if st.button("Add task"):
     if st.session_state.pets:
         task = Task(
             name=task_title,
-            category="exercise",
+            category=category,
             duration=int(duration),
             priority=priority,
             time_slot=time_slot,
             frequency="once",
         )
         st.session_state.pets[0].tasks.append(task)
+        emoji = CATEGORY_EMOJI.get(category, "📋")
         st.session_state.tasks.append({
-            "title": task_title,
+            "title": f"{emoji} {task_title}",
             "duration (mins)": int(duration),
+            "category": category,
             "priority": priority,
             "time slot": time_slot,
         })
