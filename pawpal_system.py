@@ -86,6 +86,21 @@ class Cat(Pet):
 # ---------------------------------------------------------------------------
 # Task
 # ---------------------------------------------------------------------------
+CATEGORY_EMOJI = {
+    "eating":         "🍽️",
+    "exercise":       "🚶",
+    "grooming":       "✂️",
+    "enrichment":     "🎾",
+    "routine_med":    "💊",
+    "conditional_med":"💉",
+}
+
+PRIORITY_BADGE = {
+    "high":   "🔴 high",
+    "medium": "🟡 medium",
+    "low":    "🟢 low",
+}
+
 VALID_CATEGORIES = {
     "eating",
     "exercise",
