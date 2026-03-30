@@ -1,6 +1,6 @@
 # PawPal+ (Module 2 Project)
 
-You are building **PawPal+**, a Streamlit app that helps a pet owner plan care tasks for their pet.
+A smart pet care management system that helps owners stay consistent with daily pet care routines.
 
 ## Scenario
 
@@ -10,26 +10,24 @@ A busy pet owner needs help staying consistent with pet care. They want an assis
 - Consider constraints (time available, priority, owner preferences)
 - Produce a daily plan and explain why it chose that plan
 
-Your job is to design the system first (UML), then implement the logic in Python, then connect it to the Streamlit UI.
+## What was built
 
-## What you will build
+The final app:
 
-Your final app should:
-
-- Let a user enter basic owner + pet info
-- Let a user add/edit tasks (duration + priority at minimum)
-- Generate a daily schedule/plan based on constraints and priorities
-- Display the plan clearly (and ideally explain the reasoning)
-- Include tests for the most important scheduling behaviors
+- Lets a user enter basic owner + pet info
+- Lets a user add/edit tasks (duration + priority at minimum)
+- Generates a daily schedule/plan based on constraints and priorities
+- Displays the plan clearly and explains the reasoning
+- Includes tests for the most important scheduling behaviors
 
 ## Getting started
 
 ### Setup
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+py -m venv .venv
+.venv\Scripts\activate
+py -m pip install -r requirements.txt
 ```
 
 ### Suggested workflow
@@ -41,3 +39,67 @@ pip install -r requirements.txt
 5. Add tests to verify key behaviors.
 6. Connect your logic to the Streamlit UI in `app.py`.
 7. Refine UML so it matches what you actually built.
+
+## Project structure
+
+```
+pawpal_plus/
+├── pawpal_system.py   # Core backend logic (OOP classes and scheduling)
+├── app.py             # Streamlit UI
+├── main.py            # CLI demo script
+├── conftest.py        # pytest configuration
+├── requirements.txt   # Project dependencies
+└── tests/
+    ├── __init__.py
+    └── test_pawpal.py # Automated test suite
+```
+
+## Running the app
+
+```bash
+py -m streamlit run app.py
+```
+
+## Running the CLI demo
+
+```bash
+py main.py
+```
+
+## Smarter scheduling
+
+PawPal+ includes several intelligent scheduling features:
+
+- **Sorting**: Tasks are sorted by natural day order (early morning → lunch break → afternoon → evening) using `sort_by_time()`
+- **Filtering**: Tasks can be filtered by completion status or pet name using `filter_tasks()`
+- **Recurring tasks**: Marking a daily or weekly task complete automatically generates the next occurrence using Python's `timedelta`
+- **Conflict detection**: `detect_conflicts()` checks if a time slot is overbooked and returns a warning message rather than crashing
+
+## Testing PawPal+
+
+Run the full test suite with:
+
+```bash
+py -m pytest
+```
+
+### What the tests cover
+
+| Test | Description |
+|------|-------------|
+| `test_mark_complete_once` | One-off task marked complete returns None |
+| `test_add_task_increases_count` | Adding a task to a pet increases its task count |
+| `test_mark_complete_daily` | Daily task generates a new task due tomorrow |
+| `test_mark_complete_weekly` | Weekly task generates a new task due in 7 days |
+| `test_detect_conflicts` | Slot overflow correctly flagged as a conflict |
+| `test_sort_by_time` | Tasks returned in natural day order |
+| `test_pet_with_no_tasks` | Pet with no tasks produces no errors or conflicts |
+
+### Confidence level
+
+⭐⭐⭐⭐ (4/5) — Core scheduling behaviors are well covered. Future improvements include tests for multi-pet scheduling and the actual vs scheduled time tracking feature.
+
+## Dependencies
+
+- `streamlit >= 1.30`
+- `pytest >= 7.0`
