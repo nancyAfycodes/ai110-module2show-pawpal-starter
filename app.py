@@ -1,5 +1,5 @@
 import streamlit as st
-from pawpal_system import Owner, Dog, Cat, Task, Scheduler
+from pawpal_system import Owner, Dog, Cat, Task, Scheduler, CATEGORY_EMOJI, PRIORITY_BADGE
 from datetime import date
 
 # ---------------------------------------------------------------------------
@@ -149,10 +149,10 @@ if st.button("Generate schedule"):
         st.markdown(f"### {pet.name}'s Schedule — {daily.day_of_week}, {today}")
 
         SLOT_LABELS = {
-            "early_morning": "Early Morning",
-            "lunch_break":   "Lunch Break",
-            "afternoon":     "Afternoon",
-            "evening":       "Evening",
+            "early_morning": "🌅 Early Morning",
+            "lunch_break":   "☀️ Lunch Break",
+            "afternoon":     "🌤️ Afternoon",
+            "evening":       "🌙 Evening",
         }
 
         for slot, label in SLOT_LABELS.items():
@@ -160,7 +160,12 @@ if st.button("Generate schedule"):
             st.markdown(f"**{label}**")
             if tasks:
                 for t in tasks:
-                    st.checkbox(f"{t.name} — {t.duration} min | {t.priority} priority", key=f"{slot}_{t.name}")
+                    emoji = CATEGORY_EMOJI.get(t.category, "📋")
+                    badge = PRIORITY_BADGE.get(t.priority, t.priority)
+                    st.checkbox(
+                        f"{emoji} {t.name} — {t.duration} min | {badge}",
+                        key=f"{slot}_{t.name}"
+                    )
             else:
                 st.caption("No tasks scheduled.")
 
