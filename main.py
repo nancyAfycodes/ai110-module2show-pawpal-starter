@@ -85,7 +85,7 @@ SLOT_LABELS = {
     "evening":       "🌙 Evening",
 }
 
-def build_schedule_table(daily: "DailySchedule") -> str:
+def build_schedule_table(daily) -> str:
     rows = []
     for slot, label in SLOT_LABELS.items():
         tasks = daily.time_slots.get(slot, [])
@@ -127,7 +127,7 @@ for pet in [buddy, luna]:
     print(f"\n  Scheduled: {len(daily.tasks)} task(s)")
 
     if scheduler.flagged_tasks:
-        print(f"\n  ⚠️  Flagged (could not be scheduled):")
+        print("\n  ⚠️  Flagged (could not be scheduled):")
         flagged_rows = [
             [f"🔴 {t.name}", f"{t.duration} min", PRIORITY_BADGE.get(t.priority, t.priority)]
             for t in scheduler.flagged_tasks
