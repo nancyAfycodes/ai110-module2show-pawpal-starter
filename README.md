@@ -112,11 +112,17 @@ py -m pytest
 ![alt text](image-2.png)
 ![alt text](image-3.png)
 
+## Demo Update (screen shot)  - shows emojis associated with each task
+![alt text](image-6.png)
+![alt text](image-5.png)
+![alt text](image-4.png)
+
 ### Confidence level
 
-⭐⭐⭐⭐ (4/5) — Core scheduling behaviors are well covered. Future improvements include tests for multi-pet scheduling and the actual vs scheduled time tracking feature.
+⭐⭐⭐⭐ (4/5) — Core scheduling behaviors are well covered. Future improvements include tests for multi-pet scheduling and the actual vs scheduled time tracking feature. Include a delete button for tasks entered erroneously. 
 
 ## Dependencies
 
 - `streamlit >= 1.30`
 - `pytest >= 7.0`
+- `tabulate>=0.9`
